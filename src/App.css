@@ -76,20 +76,27 @@ h1 {
   margin-bottom: 0.5rem;
 }
 
-.expense-form input {
+.form-input {
   padding: 0.85rem;
   border: 1px solid #d1d9e6;
   border-radius: 8px;
   font-size: 1rem;
-  background: #fff;
+  background: #ffffff;
+  color: #1f2a44;
   transition: all 0.2s ease;
 }
 
-.expense-form input:focus {
+.form-input:focus {
   outline: none;
   border-color: #3182ce;
   box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15);
   background: #f8fafc;
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .expense-form button {
@@ -122,30 +129,46 @@ h1 {
 .search-bar {
   width: 100%;
   max-width: 800px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
-.search-bar input {
+.search-input {
   width: 100%;
   padding: 0.85rem 1.25rem;
   border: 1px solid #d1d9e6;
   border-radius: 8px;
   font-size: 1rem;
-  background: #fff;
+  background: #ffffff;
+  color: #1f2a44;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
 }
 
-.search-bar input:focus {
+.search-input:focus {
   outline: none;
   border-color: #3182ce;
   box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.15);
   background: #f8fafc;
 }
 
-.search-bar input::placeholder {
+.search-input::placeholder {
   color: #a0aec0;
+  opacity: 0.7;
   font-style: italic;
+}
+
+/* Search Status */
+.search-status {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #4a5568;
+  text-align: center;
+  background: #edf2f7;
+  padding: 0.5rem;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Expense Table */
@@ -165,6 +188,8 @@ h1 {
   padding: 1.25rem;
   text-align: left;
   border-bottom: 1px solid #e6e9ef;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .expense-table th {
@@ -195,6 +220,17 @@ h1 {
 
 .expense-table tr:last-child td {
   border-bottom: none;
+}
+
+/* Highlight Matching Text */
+mark.highlight {
+  background: #fefcbf; /* Bright yellow */
+  color: #1f2a44;
+  font-weight: 700;
+  padding: 0.2rem 0.3rem;
+  border-radius: 4px;
+  display: inline;
+  box-decoration-break: clone; /* Ensure consistent highlight across line breaks */
 }
 
 /* Delete Button */
@@ -229,9 +265,10 @@ h1 {
   text-align: center;
   padding: 3rem;
   color: #718096;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-style: italic;
   background: #f9fafb;
+  border-radius: 12px;
 }
 
 /* Animations */
@@ -243,6 +280,7 @@ h1 {
 .app-container,
 .expense-form,
 .search-bar,
+.search-status,
 .expense-table {
   animation: fadeIn 0.5s ease-out;
 }
@@ -305,9 +343,14 @@ h1 {
     font-size: 0.95rem;
   }
 
-  .search-bar input {
+  .search-input {
     padding: 0.75rem;
     font-size: 0.95rem;
+  }
+
+  .search-status {
+    font-size: 0.9rem;
+    padding: 0.4rem;
   }
 
   .expense-table {
@@ -323,6 +366,10 @@ h1 {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;
   }
+
+  mark.highlight {
+    padding: 0.15rem 0.25rem;
+  }
 }
 
 /* Accessibility */
@@ -330,6 +377,7 @@ h1 {
   .app-container,
   .expense-form,
   .search-bar,
+  .search-status,
   .expense-table,
   .expense-form button,
   .delete-btn,

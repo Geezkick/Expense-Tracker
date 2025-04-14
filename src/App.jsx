@@ -12,12 +12,14 @@ function App() {
   ]);
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortKey, setSortKey] = useState(''); // 'description' or 'category'
-  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' or 'desc'
+  const [sortKey, setSortKey] = useState('description');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [idCounter, setIdCounter] = useState(4);
 
   // Add new expense
   const addExpense = (newExpense) => {
-    setExpenses([...expenses, { ...newExpense, id: expenses.length + 1 }]);
+    setExpenses([...expenses, { ...newExpense, id: idCounter }]);
+    setIdCounter(idCounter + 1);
   };
 
   // Delete expense
@@ -37,11 +39,9 @@ function App() {
     if (!sortKey) return 0;
     const valueA = a[sortKey].toLowerCase();
     const valueB = b[sortKey].toLowerCase();
-    if (sortOrder === 'asc') {
-      return valueA > valueB ? 1 : -1;
-    } else {
-      return valueA < valueB ? 1 : -1;
-    }
+    return sortOrder === 'asc'
+      ? valueA > valueB ? 1 : -1
+      : valueA < valueB ? 1 : -1;
   });
 
   // Handle sorting toggle
@@ -59,12 +59,18 @@ function App() {
       <h1>Expense Tracker</h1>
       <ExpenseForm onAddExpense={addExpense} />
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      {searchTerm && (
+        <div className="search-status">
+          Showing {filteredExpenses.length} of {expenses.length} expenses
+        </div>
+      )}
       <ExpenseTable
         expenses={sortedExpenses}
         onDeleteExpense={deleteExpense}
         onSort={handleSort}
         sortKey={sortKey}
         sortOrder={sortOrder}
+        searchTerm={searchTerm}
       />
     </div>
   );

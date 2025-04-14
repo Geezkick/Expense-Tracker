@@ -1,4 +1,18 @@
-function ExpenseTable({ expenses, onDeleteExpense, onSort, sortKey, sortOrder }) {
+function ExpenseTable({ expenses, onDeleteExpense, onSort, sortKey, sortOrder, searchTerm }) {
+    // Helper to render highlighted text
+    const renderHighlightedText = (text, term) => {
+      if (!term) return text;
+      const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      const parts = text.split(regex);
+      return parts.map((part, index) =>
+        part.toLowerCase() === term.toLowerCase() ? (
+          <mark key={index} className="highlight">{part}</mark>
+        ) : (
+          part
+        )
+      );
+    };
+  
     return (
       <table className="expense-table">
         <thead>
@@ -23,9 +37,9 @@ function ExpenseTable({ expenses, onDeleteExpense, onSort, sortKey, sortOrder })
           ) : (
             expenses.map((expense) => (
               <tr key={expense.id}>
-                <td>{expense.description}</td>
+                <td>{renderHighlightedText(expense.description, searchTerm)}</td>
                 <td>${expense.amount.toFixed(2)}</td>
-                <td>{expense.category}</td>
+                <td>{renderHighlightedText(expense.category, searchTerm)}</td>
                 <td>
                   <button
                     className="delete-btn"

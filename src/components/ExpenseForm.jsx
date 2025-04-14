@@ -7,11 +7,16 @@ function ExpenseForm({ onAddExpense }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!description || !amount || !category) {
-      alert('Please fill out all fields.');
+    if (!description.trim() || !amount || !category.trim()) {
+      alert('Please fill out all fields with valid values.');
       return;
     }
-    onAddExpense({ description, amount: parseFloat(amount), category });
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert('Please enter a valid positive amount.');
+      return;
+    }
+    onAddExpense({ description: description.trim(), amount: parsedAmount, category: category.trim() });
     setDescription('');
     setAmount('');
     setCategory('');
@@ -20,31 +25,38 @@ function ExpenseForm({ onAddExpense }) {
   return (
     <form onSubmit={handleSubmit} className="expense-form">
       <div>
-        <label>Description:</label>
+        <label htmlFor="description">Description:</label>
         <input
+          id="description"
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Enter description"
+          className="form-input"
         />
       </div>
       <div>
-        <label>Amount:</label>
+        <label htmlFor="amount">Amount:</label>
         <input
+          id="amount"
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Enter amount"
           step="0.01"
+          min="0"
+          className="form-input"
         />
       </div>
       <div>
-        <label>Category:</label>
+        <label htmlFor="category">Category:</label>
         <input
+          id="category"
           type="text"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Enter category"
+          className="form-input"
         />
       </div>
       <button type="submit">Add Expense</button>
