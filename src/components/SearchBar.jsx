@@ -6,6 +6,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by description or category..."
+          className="search-input"
         />
       </div>
     );
